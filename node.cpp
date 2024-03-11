@@ -22,25 +22,25 @@ node::~node() {
 }
 
 void node::setL(node* child) {
-
+  left = child;
 }
 
 void node::setR(node* child) {
-
+  right = child;
 }
 
 void node::setData(int newData) {
-
+  data = newData;
 }
 
 node* node::getL() {
-
+  return left;
 }
 
 node* node::getR() {
-
+  return right;
 }
 
 int node::getData() {
-
+  return data;
 }
