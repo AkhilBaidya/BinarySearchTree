@@ -29,7 +29,26 @@ int main {
     }
 
     else if (!strcmp(choice, "create")) {
+      char choice2[15];
       
+      cout << "Would you like to read in numbers from a file (file) or input manually (man)? " << endl;
+      cin >> choice2;
+
+      if (!strcmp(choice2, "file")) {
+	char file[10];
+
+	cout << "Please input the name of the file you want to read in: " << endl;
+	cin >> file;
+
+	fileIn(head, file);
+      }
+
+      else if (!strcmp(choice2, "man")) {
+
+	cout << "Please input your numbers manually, seperated by spaces: " << endl;
+	manIn(head);
+      }
+
     }
 
     else if (!strcmp(choice, "print")) {
@@ -50,6 +69,8 @@ int main {
 
 void fileIn(node* head, char file[10]) {
 
+  //https://www.udacity.com/blog/2021/05/how-to-read-from-a-file-in-cpp.html
+  
   ifstream theFile(file);
   int toAdd;
   
@@ -63,6 +84,13 @@ void fileIn(node* head, char file[10]) {
 
 void manIn(node* head) {
 
+  int toAdd;
+  
+  while (cin >> toAdd) {
+    node* n = new node(toAdd);
+    add(head, n);
+  }
+  
 }
 
 void add(node* head, node* toAdd) {
