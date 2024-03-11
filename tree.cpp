@@ -120,7 +120,11 @@ void add(node* head, node* toAdd) {
 
 void printTree(node* head, int depth) {
 
-  
+  if (head -> getL() == NULL || head -> getR() == NULL) {
+    cout << (depth * " ") << node -> getData() << endl; 
+  }
+
+  //print right, parent, then left 
   
 }
 
