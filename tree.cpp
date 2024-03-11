@@ -55,8 +55,17 @@ void add(node* head, node* toAdd) {
     return;
   }
 
-  
-  
+  if (toAdd -> getData() < head -> getData()) {
+    node* newLoc = head -> getL();
+    add(newLoc, toAdd);
+  }
+
+  else if (toAdd -> getData() >= head -> getData()) {
+    node* newLoc = head -> getR();
+    add(newLoc, toAdd);
+  }
+
+  return;
 }
 
 void printTree(node* head) {
