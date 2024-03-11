@@ -1,10 +1,11 @@
 #include <iostream>
 #include <cstring>
+#include <fstream>
 #include "node.h"
 
 using namespace std;
 
-void fileIn(node*);
+void fileIn(node*, char file[10]);
 void manIn(node*);
 void add(node*, node*);
 void print(node*, int);
@@ -47,7 +48,16 @@ int main {
   return 0;
 }
 
-void fileIn(node* head) {
+void fileIn(node* head, char file[10]) {
+
+  ifstream theFile(file);
+  int toAdd;
+  
+  while (theFile) {
+    theFile >> toAdd;
+    node* n = new node(toAdd);
+    add(head, n);
+  }
 
 }
 
@@ -82,6 +92,8 @@ void add(node* head, node* toAdd) {
 
 void printTree(node* head, int depth) {
 
+  
+  
 }
 
 void searchTree(node* head, int wanted) {
