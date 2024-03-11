@@ -4,8 +4,10 @@
 
 using namespace std;
 
+void fileIn(node*);
+void manIn(node*);
 void add(node*, node*);
-void print(node*);
+void print(node*, int);
 void search(node*, int);
 void del(node*, int);
 
@@ -19,12 +21,14 @@ int main {
     cout << "Hi, there. Would you like to create, print, delete_from, or search a Binary Tree? Or quit the program? " << endl;
     cin >> choice;
 
+    cout << "OK" << endl;
+    
     if (!strcmp(choice, "quit")) {
       editing = false;
     }
 
     else if (!strcmp(choice, "create")) {
-
+      
     }
 
     else if (!strcmp(choice, "print")) {
@@ -41,6 +45,14 @@ int main {
     
   }
   return 0;
+}
+
+void fileIn(node* head) {
+
+}
+
+void manIn(node* head) {
+
 }
 
 void add(node* head, node* toAdd) {
@@ -68,7 +80,7 @@ void add(node* head, node* toAdd) {
   return;
 }
 
-void printTree(node* head) {
+void printTree(node* head, int depth) {
 
 }
 
