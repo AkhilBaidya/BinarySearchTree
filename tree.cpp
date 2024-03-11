@@ -49,6 +49,7 @@ int main {
 	manIn(head);
       }
 
+      cout << "Created Binary Search Tree!" << endl;
     }
 
     else if (!strcmp(choice, "print")) {
@@ -57,6 +58,13 @@ int main {
     }
 
     else if (!strcmp(choice, "delete_from")) {
+      int hated;
+
+      cout << "What number do you want to delete? " << endl;
+      cin >> hated;
+      del(head, hated);
+      cout << "Deleted number from Binary Search Tree!" << endl;
+      
     }
 
     else if (!strcmp(choice, "search")) {
