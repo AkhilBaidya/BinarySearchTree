@@ -124,7 +124,10 @@ void printTree(node* head, int depth) {
     cout << (depth * " ") << node -> getData() << endl; 
   }
 
-  //print right, parent, then left 
+  //print right, parent, then left
+  printTree(head -> getR(), depth + 1);
+  cout << (depth * " ") << node -> getData() << endl;
+  printTree(head -> getL(), depth + 1);
   
 }
 
