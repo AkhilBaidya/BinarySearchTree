@@ -9,7 +9,7 @@ void fileIn(node*, char file[10]);
 void manIn(node*);
 void add(node*, node*);
 void print(node*, int);
-bool search(node*, int);
+void search(node*, int, bool &);
 void del(node*, int);
 
 int main {
@@ -61,11 +61,13 @@ int main {
 
     else if (!strcmp(choice, "search")) {
       int wanted;
+      bool there = false;
 
       cout << "What number are you looking for? " << endl;
       cin >> wanted;
-
-      if (searchTree(head, wanted)) {
+      searchTree(head, wanted, there);
+      
+      if (there) {
 	cout << "Yeah, it is in the tree" << endl;
       }
 
@@ -142,8 +144,19 @@ void printTree(node* head, int depth) {
   
 }
 
-bool searchTree(node* head, int wanted) {
+void searchTree(node* head, int wanted, bool &there) {
+  if (head -> getData() == wanted) {
+    there = true;
+  }
 
+  if (head -> getL() == NULL && head -> getR() == NULL) {
+    return;
+  }
+
+  searchTree(head -> getR(), wanted, there); //recurse right to check if there
+  searchTree(head -> getL(), wanted, there); //recurse left to check if there
+
+  return;
 }
 
 void delfromTree(node* head, int hated) {
