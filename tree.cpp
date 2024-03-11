@@ -13,6 +13,7 @@ int main {
 
   bool editing = true;
   char choice[15];
+  node* head = new node();
 
   while (editing) {
     cout << "Hi, there. Would you like to create, print, delete_from, or search a Binary Tree? Or quit the program? " << endl;
@@ -42,19 +43,31 @@ int main {
   return 0;
 }
 
-void add(node*, node*) {
+void add(node* head, node* toAdd) {
+
+  if (head -> getL() == NULL && toAdd -> getData() < head -> getData()) {
+    head -> setL(toAdd);
+    return;
+  }
+
+  else if (head -> getR() == NULL && toAdd -> getData() >= head -> getData()) {
+    head -> setR(toAdd);
+    return;
+  }
+
+  
+  
+}
+
+void printTree(node* head) {
 
 }
 
-void printTree(node*) {
+void searchTree(node* head, int wanted) {
 
 }
 
-void searchTree(node*, int) {
-
-}
-
-void delfromTree(node*, int) {
+void delfromTree(node* head, int hated) {
 
 }
 
