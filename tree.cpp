@@ -189,6 +189,21 @@ void delfromTree(node* head, int hated) {
 
     else { //case three: deleting node with one child
 
+      if (head -> getL() != NULL) {
+	node* prevHead = head;
+	prevHead -> setL(NULL);
+	prevHead -> setR(NULL);
+	head = head -> getL();
+	delete prevHead;
+      }
+
+      else if (head -> getR() != NULL) {
+	node* prevHead = head;
+	prevHead -> setL(NULL);
+	prevHead -> setR(NULL);
+	head = head -> getR();
+	delete prevHead;
+      }
     }
   }
 
