@@ -7,7 +7,7 @@ class node {
 
  public:
   node();
-  node(data);
+  node(int);
   ~node();
 
   //set
@@ -24,4 +24,4 @@ class node {
   node* left;
   node* right;
   int data;
-}
+};
