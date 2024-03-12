@@ -161,13 +161,26 @@ void searchTree(node* head, int wanted, bool &there) {
     return;
   }
 
-  searchTree(head -> getR(), wanted, there); //recurse right to check if there
-  searchTree(head -> getL(), wanted, there); //recurse left to check if there
+  if (wanted > head -> getData()) {
+    searchTree(head -> getR(), wanted, there); //recurse right
+  }
 
+  if (wanted < head -> getData()) {
+    searchTree(head -> getL(), wanted, there); //recurse left
+  }
+  
   return;
 }
 
 void delfromTree(node* head, int hated) {
 
+  //case one: deleting the root
+
+  //case two: deleting node with two children
+
+  //case three: deleting node with one child
+
+  //case four: deleting node with no children
+  
 }
 
