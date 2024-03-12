@@ -174,13 +174,30 @@ void searchTree(node* head, int wanted, bool &there) {
 
 void delfromTree(node* head, int hated) {
 
-  //case one: deleting the root
+  //referred to https://www.youtube.com/watch?v=h5zwiQjl69g&t=112s (Mr. Galbraith's summary of a binary tree and deletion scenarios)
 
-  //case two: deleting node with two children
+  if (head -> getData() == hated) {
 
-  //case three: deleting node with one child
+    if (head -> getL() == NULL && head -> getR() == NULL) {
+      head = NULL; //case one: deleting node with no children
+      return;
+    }
 
-  //case four: deleting node with no children
-  
+    else if (head -> getL() != NULL && head -> getR() != NULL) {
+      //case two: deleting node with two children
+    }
+
+    else { //case three: deleting node with one child
+
+    }
+  }
+
+  if (hated > head -> getData()) {
+    delfromTree(head -> getR(), hated);
+  }
+
+  if (hated < head -> getData()) {
+    delfromTree(head -> getL(), hated);
+  }
 }
 
