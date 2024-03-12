@@ -180,7 +180,7 @@ void searchTree(node* head, int wanted, bool &there) {
   return;
 }
 
-void delfromTree(node* head, int hated) {
+void del(node* head, int hated) {
 
   //referred to https://www.youtube.com/watch?v=h5zwiQjl69g&t=112s (Mr. Galbraith's summary of a binary tree and deletion scenarios)
 
@@ -233,11 +233,11 @@ void delfromTree(node* head, int hated) {
   }
 
   if (hated > head -> getData()) {
-    delfromTree(head -> getR(), hated);
+    del(head -> getR(), hated);
   }
 
   if (hated < head -> getData()) {
-    delfromTree(head -> getL(), hated);
+    del(head -> getL(), hated);
   }
 
   return;
