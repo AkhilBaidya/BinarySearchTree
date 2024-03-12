@@ -8,11 +8,11 @@ using namespace std;
 void fileIn(node*, char file[10]);
 void manIn(node*);
 void add(node*, node*);
-void print(node*, int);
-void search(node*, int, bool &);
+void printTree(node*, int);
+void searchTree(node*, int, bool &);
 void del(node*, int);
 
-int main {
+int main() {
 
   bool editing = true;
   char choice[15];
@@ -142,12 +142,20 @@ void add(node* head, node* toAdd) {
 void printTree(node* head, int depth) {
 
   if (head -> getL() == NULL || head -> getR() == NULL) {
-    cout << (depth * " ") << node -> getData() << endl; 
+    
+  for (int i = 0; i < depth; i++) {
+    cout << " ";
+  }
+  cout << head -> getData() << endl; 
   }
 
   //print right, parent, then left
   printTree(head -> getR(), depth + 1);
-  cout << (depth * " ") << node -> getData() << endl;
+
+  for (int i = 0; i < depth; i++) {
+    cout << " ";
+  }
+  cout << head -> getData() << endl;
   printTree(head -> getL(), depth + 1);
   
 }
