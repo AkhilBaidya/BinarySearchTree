@@ -16,7 +16,7 @@ int main() {
 
   bool editing = true;
   char choice[15];
-  node* head = new node();
+  node* head = NULL;
 
   while (editing) {
     cout << "Hi, there. Would you like to create, print, delete_from, or search a Binary Tree? Or quit the program? " << endl;
@@ -54,7 +54,12 @@ int main() {
 
     else if (!strcmp(choice, "print")) {
       cout << "Here is the tree: " << endl;
-      printTree(head, 0);
+
+      if (head == NULL) {
+	cout << "huh" << endl;
+      }
+      //cout << head -> getData() << endl;
+      //printTree(head, 0);
     }
 
     else if (!strcmp(choice, "delete_from")) {
@@ -98,7 +103,13 @@ void fileIn(node* head, char file[10]) {
   while (theFile) {
     theFile >> toAdd;
     node* n = new node(toAdd);
-    add(head, n);
+
+    if (head == NULL) {
+      head = n;
+    }
+    else {
+      add(head, n);
+    }
   }
 
 }
@@ -109,13 +120,19 @@ void manIn(node* head) {
   
   while (cin >> toAdd) {
     node* n = new node(toAdd);
-    add(head, n);
+
+    if (head == NULL) {
+      head = n;
+    }
+    else {
+      add(head, n);
+    }
   }
   
 }
 
 void add(node* head, node* toAdd) {
-
+  
   if (head -> getL() == NULL && toAdd -> getData() < head -> getData()) {
     head -> setL(toAdd);
     return;
@@ -127,13 +144,11 @@ void add(node* head, node* toAdd) {
   }
 
   if (toAdd -> getData() < head -> getData()) {
-    node* newLoc = head -> getL();
-    add(newLoc, toAdd);
+    add(head -> getL(), toAdd);
   }
 
   else if (toAdd -> getData() >= head -> getData()) {
-    node* newLoc = head -> getR();
-    add(newLoc, toAdd);
+    add(head -> getR(), toAdd);
   }
 
   return;
@@ -141,21 +156,32 @@ void add(node* head, node* toAdd) {
 
 void printTree(node* head, int depth) {
 
-  if (head -> getL() == NULL || head -> getR() == NULL) {
+  cout << head -> getData() << endl;
+  
+  if (head -> getL() == NULL && head -> getR() == NULL) {
+
+    cout << "at end" << endl;
     
-  for (int i = 0; i < depth; i++) {
-    cout << " ";
-  }
-  cout << head -> getData() << endl; 
+    for (int i = 0; i < depth; i++) {
+      cout << " ";
+    }
+    cout << head -> getData() << endl;
+
+    return;
   }
 
   //print right, parent, then left
+  cout << "going right" << endl;
   printTree(head -> getR(), depth + 1);
 
   for (int i = 0; i < depth; i++) {
     cout << " ";
   }
+
+  cout << "current" << endl;
   cout << head -> getData() << endl;
+
+  cout << "going left" << endl;
   printTree(head -> getL(), depth + 1);
   
 }
