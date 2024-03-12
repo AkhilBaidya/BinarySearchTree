@@ -185,6 +185,23 @@ void delfromTree(node* head, int hated) {
 
     else if (head -> getL() != NULL && head -> getR() != NULL) {
       //case two: deleting node with two children
+
+      node* replaceWith = head -> getR(); //get the smallest # larger than the deleted node to replace it with
+
+      
+      while (replaceWith -> getL() != NULL) {
+	replaceWith = replaceWith -> getL();
+      }
+
+      node* end = replaceWith; //end of tree
+      if (end -> getR() != NULL) { //if there is a right child
+	end = end -> getR();
+      }
+
+      replaceWith -> setL(head -> getL());
+      replaceWith -> setR(head -> getR());
+
+      head = replaceWith; //replace head
     }
 
     else { //case three: deleting node with one child
@@ -214,5 +231,7 @@ void delfromTree(node* head, int hated) {
   if (hated < head -> getData()) {
     delfromTree(head -> getL(), hated);
   }
+
+  return;
 }
 
