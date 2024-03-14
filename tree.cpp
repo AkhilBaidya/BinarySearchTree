@@ -17,8 +17,9 @@ int main() {
   bool editing = true;
   char choice[15];
   node* head = new node(-1);
-  node** toHead = new node*();
+  node** toHead = new node*;
   (*toHead) = head;
+  cout << (*toHead) -> getData() << endl;
 
   while (editing) {
     cout << "Hi, there. Would you like to create, print, delete_from, or search a Binary Tree? Or quit the program? " << endl;
@@ -67,7 +68,10 @@ int main() {
       //cout << "huh" << endl;
       //}
       cout << (*toHead) -> getData() << endl;
-      //printTree(head, 0);
+      cout << (*toHead) -> getR() -> getData() << endl;
+
+      cout << "here's the actual tree plz work" << endl;
+      printTree(*toHead, 0);
     }
 
     else if (!strcmp(choice, "delete_from")) {
@@ -104,7 +108,8 @@ int main() {
 void fileIn(node** head, char file[10]) {
 
   //https://www.udacity.com/blog/2021/05/how-to-read-from-a-file-in-cpp.html
-  
+
+  cout << "getting file" << endl;
   ifstream theFile(file);
   int toAdd;
   
@@ -114,11 +119,20 @@ void fileIn(node** head, char file[10]) {
 
     if ((*head) -> getData() == -1) {
       (*head) = n;
+      cout << "changed" << endl;
     }
     else {
+      cout << "adding to head" << endl;
       add(*head, n);
+      cout << (*head) -> getR() -> getData() << endl;
+
+      if ((*head) -> getR() -> getR() != NULL) {
+	cout << (*head) -> getR() -> getR() -> getData() << endl;
+      }
     }
   }
+
+  cout << "exited loop" << endl;
 
 }
 
@@ -140,22 +154,26 @@ void manIn(node** head) {
 }
 
 void add(node* head, node* toAdd) {
-  
+
   if (head -> getL() == NULL && toAdd -> getData() < head -> getData()) {
+    cout << "reached end, going to add" << endl;
     (*head).setL(toAdd);
     return;
   }
 
   else if (head -> getR() == NULL && toAdd -> getData() >= head -> getData()) {
+    cout << "reached end, going to add R" << endl;
     (*head).setR(toAdd);
     return;
   }
 
   if (toAdd -> getData() < head -> getData()) {
+    cout << "recursing left" << endl;
     add(head -> getL(), toAdd);
   }
 
   else if (toAdd -> getData() >= head -> getData()) {
+    cout << "recursing right" << endl;
     add(head -> getR(), toAdd);
   }
 
