@@ -22,11 +22,13 @@ node::~node() {
 }
 
 void node::setL(node* child) {
-  left = child;
+  left = new node();
+  *left = *child;
 }
 
 void node::setR(node* child) {
-  right = child;
+  right = new node();
+  *right = *child;
 }
 
 void node::setData(int newData) {
