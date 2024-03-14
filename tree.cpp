@@ -5,8 +5,8 @@
 
 using namespace std;
 
-void fileIn(node*, char file[10]);
-void manIn(node*);
+void fileIn(node**, char file[10]);
+void manIn(node**);
 void add(node*, node*);
 void printTree(node*, int);
 void searchTree(node*, int, bool &);
@@ -16,7 +16,9 @@ int main() {
 
   bool editing = true;
   char choice[15];
-  node* head = NULL;
+  node* head = new node(-1);
+  node** toHead = new node*();
+  (*toHead) = head;
 
   while (editing) {
     cout << "Hi, there. Would you like to create, print, delete_from, or search a Binary Tree? Or quit the program? " << endl;
@@ -40,13 +42,19 @@ int main() {
 	cout << "Please input the name of the file you want to read in: " << endl;
 	cin >> file;
 
-	fileIn(head, file);
+	fileIn(toHead, file);
       }
 
       else if (!strcmp(choice2, "man")) {
 
 	cout << "Please input your numbers manually, seperated by spaces: " << endl;
-	manIn(head);
+	node* bob = new node();
+	bob -> setData(2);
+	add(head, bob);
+	//manIn(head);
+	if (head == NULL) {
+	  cout << "nah not doing it" << endl;
+	}
       }
 
       cout << "Created Binary Search Tree!" << endl;
@@ -55,10 +63,10 @@ int main() {
     else if (!strcmp(choice, "print")) {
       cout << "Here is the tree: " << endl;
 
-      if (head == NULL) {
-	cout << "huh" << endl;
-      }
-      //cout << head -> getData() << endl;
+      //if (head == NULL) {
+      //cout << "huh" << endl;
+      //}
+      cout << (*toHead) -> getData() << endl;
       //printTree(head, 0);
     }
 
@@ -93,7 +101,7 @@ int main() {
   return 0;
 }
 
-void fileIn(node* head, char file[10]) {
+void fileIn(node** head, char file[10]) {
 
   //https://www.udacity.com/blog/2021/05/how-to-read-from-a-file-in-cpp.html
   
@@ -104,28 +112,28 @@ void fileIn(node* head, char file[10]) {
     theFile >> toAdd;
     node* n = new node(toAdd);
 
-    if (head == NULL) {
-      head = n;
+    if ((*head) -> getData() == -1) {
+      (*head) = n;
     }
     else {
-      add(head, n);
+      add(*head, n);
     }
   }
 
 }
 
-void manIn(node* head) {
+void manIn(node** head) {
 
   int toAdd;
   
   while (cin >> toAdd) {
     node* n = new node(toAdd);
 
-    if (head == NULL) {
-      head = n;
+    if ((*head) -> getData() == -1) {
+      (*head) = n;
     }
     else {
-      add(head, n);
+      add(*head, n);
     }
   }
   
@@ -134,12 +142,12 @@ void manIn(node* head) {
 void add(node* head, node* toAdd) {
   
   if (head -> getL() == NULL && toAdd -> getData() < head -> getData()) {
-    head -> setL(toAdd);
+    (*head).setL(toAdd);
     return;
   }
 
   else if (head -> getR() == NULL && toAdd -> getData() >= head -> getData()) {
-    head -> setR(toAdd);
+    (*head).setR(toAdd);
     return;
   }
 
@@ -151,6 +159,7 @@ void add(node* head, node* toAdd) {
     add(head -> getR(), toAdd);
   }
 
+  //cout << head -> getData();
   return;
 }
 
