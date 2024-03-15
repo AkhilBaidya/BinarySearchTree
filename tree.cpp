@@ -183,14 +183,9 @@ void add(node* head, node* toAdd) {
 
 void printTree(node* head, int depth) {
 
-  cout << head -> getData() << endl;
-  
   if (head -> getL() == NULL && head -> getR() == NULL) {
-
-    cout << "at end" << endl;
-    
     for (int i = 0; i < depth; i++) {
-      cout << " ";
+    cout << " ";
     }
     cout << head -> getData() << endl;
 
@@ -198,19 +193,19 @@ void printTree(node* head, int depth) {
   }
 
   //print right, parent, then left
-  cout << "going right" << endl;
-  printTree(head -> getR(), depth + 1);
+  if (head -> getR() != NULL) {
+    printTree(head -> getR(), depth + 1);
+  }
 
   for (int i = 0; i < depth; i++) {
     cout << " ";
   }
 
-  cout << "current" << endl;
   cout << head -> getData() << endl;
 
-  cout << "going left" << endl;
-  printTree(head -> getL(), depth + 1);
-  
+ if (head -> getL() != NULL) {
+   printTree(head -> getL(), depth + 1);
+  }
 }
 
 void searchTree(node* head, int wanted, bool &there) {
