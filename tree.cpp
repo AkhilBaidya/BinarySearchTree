@@ -39,15 +39,12 @@ int main() {
 
       if (!strcmp(choice2, "file")) {
 	char file[10];
-
 	cout << "Please input the name of the file you want to read in: " << endl;
 	cin >> file;
-
 	fileIn(toHead, file);
       }
 
       else if (!strcmp(choice2, "man")) {
-
 	cout << "Please input your numbers manually, seperated by spaces: " << endl;
 	node* bob = new node();
 	bob -> setData(2);
@@ -57,16 +54,11 @@ int main() {
 	  cout << "nah not doing it" << endl;
 	}
       }
-
       cout << "Created Binary Search Tree!" << endl;
     }
 
     else if (!strcmp(choice, "print")) {
       cout << "Here is the tree: " << endl;
-
-      //if (head == NULL) {
-      //cout << "huh" << endl;
-      //}
       cout << (*toHead) -> getData() << endl;
       cout << (*toHead) -> getR() -> getData() << endl;
 
@@ -80,15 +72,15 @@ int main() {
       cout << "What number do you want to delete? " << endl;
       cin >> hated;
 
+      cout << "check first" << endl;
       if ((*toHead) -> getL() == NULL && (*toHead) -> getR() == NULL && (*toHead) -> getData() == hated) {
-	(*toHead) = NULL;
+      (*toHead) = NULL;
       }
-
-      else {	
+      else {
+	cout << "going in " << endl; 
 	del((*toHead), hated);
       }
-      cout << "Deleted number from Binary Search Tree!" << endl;
-      
+      cout << "Deleted number from Binary Search Tree!" << endl; 
     }
 
     else if (!strcmp(choice, "search")) {
@@ -107,7 +99,6 @@ int main() {
 	cout << "No, it isn't in the tree" << endl;
       }
     }
-    
   }
   return 0;
 }
@@ -242,16 +233,26 @@ void del(node* head, int hated) {
 
   //referred to https://www.youtube.com/watch?v=h5zwiQjl69g&t=112s (Mr. Galbraith's summary of a binary tree and deletion scenarios)
 
-  if (head -> getL() -> getData() == hated && head -> getL() -> getL() == NULL && head -> getL() -> getR() == NULL) {
+  if (head -> getL() != NULL && head -> getL() -> getData() == hated && head -> getL() -> getL() == NULL && head -> getL() -> getR() == NULL) {
+    cout << "at left" << endl;
     node* prev = head -> getL();
+    cout << "set prev" << endl;
     head -> setL(NULL);
+    cout << "Set" << endl;
     delete prev; //case 1
+    cout << "delete" << endl;
+    return;
   }
 
-  else if (head -> getR() -> getData() == hated && head -> getR() -> getL() == NULL && head -> getR() -> getR() == NULL) {
+  else if (head -> getR() != NULL && head -> getR() -> getData() == hated && head -> getR() -> getL() == NULL && head -> getR() -> getR() == NULL) {
+    cout << "at right" << endl;
     node* prev = head -> getR();
+    cout << "Set prev" << endl;
     head -> setR(NULL);
+    cout << "set" << endl;
     delete prev;
+    cout << "delete" << endl;
+    return;
   }
   
   else if (head -> getData() == hated) {
