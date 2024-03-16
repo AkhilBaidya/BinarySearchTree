@@ -10,7 +10,7 @@ void manIn(node**);
 void add(node*, node*);
 void printTree(node*, int);
 void searchTree(node*, int, bool &);
-void del(node*, int);
+void del(node**, int);
 
 int main() {
 
@@ -79,7 +79,7 @@ int main() {
 
       cout << "What number do you want to delete? " << endl;
       cin >> hated;
-      del(head, hated);
+      del(toHead, hated);
       cout << "Deleted number from Binary Search Tree!" << endl;
       
     }
@@ -90,7 +90,7 @@ int main() {
 
       cout << "What number are you looking for? " << endl;
       cin >> wanted;
-      searchTree(head, wanted, there);
+      searchTree(*toHead, wanted, there);
       
       if (there) {
 	cout << "Yeah, it is in the tree" << endl;
@@ -209,83 +209,113 @@ void printTree(node* head, int depth) {
 }
 
 void searchTree(node* head, int wanted, bool &there) {
+
+  cout << "looking at " << head -> getData() << endl;
   if (head -> getData() == wanted) {
     there = true;
+    return;
   }
 
   if (head -> getL() == NULL && head -> getR() == NULL) {
     return;
   }
 
-  if (wanted > head -> getData()) {
+  if (wanted > head -> getData() && head -> getR() != NULL) {
     searchTree(head -> getR(), wanted, there); //recurse right
   }
 
-  if (wanted < head -> getData()) {
+  if (wanted < head -> getData() && head -> getL() != NULL) {
     searchTree(head -> getL(), wanted, there); //recurse left
   }
   
   return;
 }
 
-void del(node* head, int hated) {
+void del(node** head, int hated) {
 
   //referred to https://www.youtube.com/watch?v=h5zwiQjl69g&t=112s (Mr. Galbraith's summary of a binary tree and deletion scenarios)
 
-  if (head -> getData() == hated) {
-
-    if (head -> getL() == NULL && head -> getR() == NULL) {
-      head = NULL; //case one: deleting node with no children
+  if ((*head) -> getData() == hated) {
+    cout << "found it" << endl;
+    
+    if ((*head) -> getL() == NULL && (*head) -> getR() == NULL) {
+      cout << "case 1" << endl;
+      (*head) = NULL;
+      cout << "make null" << endl;
+      delete (*head); //case one: deleting node with no children
+      cout << "deleted content" << endl;
       return;
     }
 
-    else if (head -> getL() != NULL && head -> getR() != NULL) {
+    else if ((*head) -> getL() != NULL && (*head) -> getR() != NULL) {
       //case two: deleting node with two children
 
-      node* replaceWith = head -> getR(); //get the smallest # larger than the deleted node to replace it with
+      cout << "case 2" << endl;
+      node* replaceWith = (*head) -> getR(); //get the smallest # larger than the deleted node to replace it with
 
       
       while (replaceWith -> getL() != NULL) {
 	replaceWith = replaceWith -> getL();
       }
 
+      cout << "Get the leftmost" << endl;
+
       node* end = replaceWith; //end of tree
       if (end -> getR() != NULL) { //if there is a right child
 	end = end -> getR();
       }
 
-      replaceWith -> setL(head -> getL());
-      replaceWith -> setR(head -> getR());
+      replaceWith -> setL((*head) -> getL());
+      replaceWith -> setR((*head) -> getR());
 
-      head = replaceWith; //replace head
+      (*head) = replaceWith; //replace head
+
+      cout << "replacements made" << endl;
+      return;
     }
 
     else { //case three: deleting node with one child
 
-      if (head -> getL() != NULL) {
-	node* prevHead = head;
-	prevHead -> setL(NULL);
-	prevHead -> setR(NULL);
-	head = head -> getL();
-	delete prevHead;
+      cout << "case three" << endl;
+      
+      if ((*head) -> getL() != NULL) {
+	cout << "has l child" << endl;
+	//node* prevHead = head;
+	//prevHead -> setL(NULL);
+	//prevHead -> setR(NULL);
+	//cout << "created temp " << endl;
+	*(*head) = *((*head) -> getL());
+	cout << "move on" << endl;
+	//delete prevHead;
+	cout << "deleted" << endl;
       }
 
-      else if (head -> getR() != NULL) {
-	node* prevHead = head;
-	prevHead -> setL(NULL);
-	prevHead -> setR(NULL);
-	head = head -> getR();
-	delete prevHead;
+      else if ((*head) -> getR() != NULL) {
+	cout << "right c" << endl;
+	//node* prevHead = head;
+	//node* instead = NULL;
+	//prevHead -> setL(instead);
+	//prevHead -> setR(instead);
+	//cout << "created temp " << endl;
+	*(*head) = *((*head) -> getR());
+	cout << "move on" << endl;
+	//delete prevHead;
+	cout << "deleted" << endl;
       }
+      return;
     }
   }
 
-  if (hated > head -> getData()) {
-    del(head -> getR(), hated);
+  if (hated > (*head) -> getData() && (*head) -> getR() != NULL) {
+    node** next = new node*;
+    (*next) = (*head) -> getR();
+    del(next, hated);
   }
 
-  if (hated < head -> getData()) {
-    del(head -> getL(), hated);
+  if (hated < (*head) -> getData() && (*head) -> getL() != NULL) {
+    node** next = new node*;
+    (*next) = (*head) -> getL();
+    del(next, hated);
   }
 
   return;
