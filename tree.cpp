@@ -46,24 +46,26 @@ int main() {
 
       else if (!strcmp(choice2, "man")) {
 	cout << "Please input your numbers manually, seperated by spaces: " << endl;
-	node* bob = new node();
-	bob -> setData(2);
-	add(head, bob);
-	//manIn(head);
-	if (head == NULL) {
-	  cout << "nah not doing it" << endl;
-	}
+	manIn(toHead);
       }
       cout << "Created Binary Search Tree!" << endl;
     }
 
     else if (!strcmp(choice, "print")) {
       cout << "Here is the tree: " << endl;
-      cout << (*toHead) -> getData() << endl;
-      cout << (*toHead) -> getR() -> getData() << endl;
+      //cout << (*toHead) -> getData() << endl;
+      //cout << (*toHead) -> getR() -> getData() << endl;
 
-      cout << "here's the actual tree plz work" << endl;
-      printTree(*toHead, 0);
+      //cout << "here's the actual tree plz work" << endl;
+      if ((*toHead) == NULL) {
+	cout << "Tree is empty" << endl;
+      }
+      else if ((*toHead)->getData() == -1) {
+	cout << "Tree is empty" << endl;
+      }
+      else {
+	printTree(*toHead, 0);
+      }
     }
 
     else if (!strcmp(choice, "delete_from")) {
@@ -115,7 +117,10 @@ void fileIn(node** head, char file[10]) {
     theFile >> toAdd;
     node* n = new node(toAdd);
 
-    if ((*head) -> getData() == -1) {
+    if ((*head) == NULL) {
+      (*head) = n;
+    }
+    else if ((*head) -> getData() == -1) {
       (*head) = n;
       cout << "changed" << endl;
     }
@@ -138,10 +143,13 @@ void manIn(node** head) {
 
   int toAdd;
   
-  while (cin >> toAdd) {
+  while (cin >> toAdd && toAdd != -1) { //idea to use -1 to end input suggested by Kevin!
     node* n = new node(toAdd);
 
-    if ((*head) -> getData() == -1) {
+    if ((*head) == NULL) {
+      (*head) = n;
+    }
+    else if ((*head) -> getData() == -1) {
       (*head) = n;
     }
     else {
@@ -275,23 +283,15 @@ void del(node* head, int hated) {
       cout << "case 2" << endl;
       node* replaceWith = head -> getR(); //get the smallest # larger than the deleted node to replace it with
 
-      
-      while (replaceWith -> getL() != NULL) {
-	replaceWith = replaceWith -> getL();
-      }
+      //going down left to get successor
+	while (replaceWith -> getL() != NULL) {
+	  replaceWith = replaceWith -> getL();
+	}
 
-      cout << "Get the leftmost" << endl;
+	*head = *replaceWith; //copy value (but don't change left or right)
 
-      node* end = replaceWith; //end of tree
-      if (end -> getR() != NULL) { //if there is a right child
-	end = end -> getR();
-      }
-
-      replaceWith -> setL(head -> getL());
-      replaceWith -> setR(head -> getR());
-
-      (*head) = (*replaceWith); //replace head
-
+	replaceWith = replaceWith -> getR(); //NULL or right child
+    
       cout << "replacements made" << endl;
       return;
     }
