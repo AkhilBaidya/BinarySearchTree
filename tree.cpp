@@ -183,10 +183,10 @@ void printTree(node* head, int depth) {
 
   if (head -> getL() == NULL && head -> getR() == NULL) {
     for (int i = 0; i < depth; i++) {
-    cout << " ";
+    cout << "\t";
     }
-    cout << head -> getData() << endl;
-
+    cout << "[";
+    cout << head -> getData() << "]" << endl;
     return;
   }
 
@@ -194,12 +194,13 @@ void printTree(node* head, int depth) {
   if (head -> getR() != NULL) {
     printTree(head -> getR(), depth + 1);
   }
-
+  
   for (int i = 0; i < depth; i++) {
-    cout << " ";
+    cout << "\t";
   }
 
-  cout << head -> getData() << endl;
+  cout << "[";
+  cout << head -> getData() << "]" << endl;
 
  if (head -> getL() != NULL) {
    printTree(head -> getL(), depth + 1);
