@@ -91,7 +91,16 @@ int main() {
 
       cout << "What number are you looking for? " << endl;
       cin >> wanted;
-      searchTree(*toHead, wanted, there);
+
+      if ((*toHead) == NULL) {
+	cout << "Tree is empty" << endl;
+      }
+      else if ((*toHead) -> getData() == -1) {
+	cout << "Tree is empty" << endl; //state in beginning
+      }
+      else {
+	searchTree(*toHead, wanted, there);
+      }
       
       if (there) {
 	cout << "Yeah, it is in the tree" << endl;
@@ -113,8 +122,7 @@ void fileIn(node** head, char file[10]) {
   ifstream theFile(file);
   int toAdd;
   
-  while (theFile) {
-    theFile >> toAdd;
+  while (theFile >> toAdd) {
     node* n = new node(toAdd);
 
     if ((*head) == NULL) {
@@ -134,7 +142,7 @@ void fileIn(node** head, char file[10]) {
       }
     }
   }
-
+  
   cout << "exited loop" << endl;
 
 }
@@ -281,17 +289,53 @@ void del(node* head, int hated) {
       //case two: deleting node with two children
 
       cout << "case 2" << endl;
-      node* replaceWith = head -> getR(); //get the smallest # larger than the deleted node to replace it with
+      
+      node* replaceWith = head; //get the smallest # larger than the deleted node to replace it with
 
-      //going down left to get successor
-	while (replaceWith -> getL() != NULL) {
+      if (replaceWith -> getR() -> getL() != NULL) { //can go lower
+	replaceWith = head -> getR();
+
+	while (replaceWith -> getL() != NULL && replaceWith -> getL() -> getL() != NULL) {
 	  replaceWith = replaceWith -> getL();
 	}
 
-	*head = *replaceWith; //copy value (but don't change left or right)
+	cout << "reached the end at " << replaceWith -> getData() << endl;
+      
+	node* actual = new node;
+	*actual = *(replaceWith -> getL());
+	actual -> setL(head -> getL());
+	actual -> setR(head -> getR());
+	cout << "get actual" << endl;
+	
+	*head = *actual; //copy value (but don't change left or right)
+	cout << "copy" << endl;
+	
+	if (replaceWith -> getL() -> getR() == NULL) {
+	  replaceWith -> setL(NULL);
+	}
+	else {
+	  *(replaceWith -> getL()) = *(replaceWith -> getL() -> getR());
+	}
+      }
 
-	replaceWith = replaceWith -> getR(); //NULL or right child
-    
+      else { //cannot go lower
+	node* actual = new node;
+	*actual = *(replaceWith -> getR());
+	actual -> setL(head -> getL());
+	actual -> setR(head -> getR());
+	*head = *actual;
+
+	if (replaceWith -> getR() -> getR() == NULL) {
+	  replaceWith -> setR(NULL);
+	}
+	else {
+	  *(replaceWith -> getR()) = *(replaceWith -> getR() -> getR());
+	}
+      }
+
+      //going down left to get successor
+	
+
       cout << "replacements made" << endl;
       return;
     }
