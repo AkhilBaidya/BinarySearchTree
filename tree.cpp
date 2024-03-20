@@ -133,10 +133,22 @@ int main() {
       }
 
       //Otherwise, call the deletion function:
-      else { 
-	del((*toHead), hated);
+      else {
+
+	//Check if number is there:
+	bool check = false;
+	searchTree(*toHead, hated, check);
+
+	if (there) {
+	  cout << "In tree!" << endl;
+	  del((*toHead), hated);
+	  cout << "Deleted number from tree!" << endl;
+	}
+
+	else {
+	  cout << "Not in tree" << endl;
+	}
       }
-      cout << "Deleted number from Binary Search Tree!" << endl; 
     }
 
     //Searching in tree:
