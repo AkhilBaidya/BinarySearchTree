@@ -85,7 +85,7 @@ int main() {
 
       //Adding in manually:
       else if (!strcmp(choice2, "man")) {
-	cout << "Please input your numbers manually, seperated by spaces: " << endl;
+	cout << "Please input your numbers manually, seperated by spaces (please make the last number -1 to end read in): " << endl;
 	manIn(toHead); //begin manual addition process
       }
       cout << "Created Binary Search Tree!" << endl;
@@ -139,7 +139,7 @@ int main() {
 	bool check = false;
 	searchTree(*toHead, hated, check);
 
-	if (there) {
+	if (check) {
 	  cout << "In tree!" << endl;
 	  del((*toHead), hated);
 	  cout << "Deleted number from tree!" << endl;
